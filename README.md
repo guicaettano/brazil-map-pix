@@ -1,48 +1,66 @@
-# Mapa de Transações Pix por Estado (Brasil)
+# Brazil Map Pix
 
-Um painel interativo (dashboard) desenvolvido em Next.js (App Router) que exibe um mapa coroplético do Brasil com o volume e o valor total de transações Pix por estado (UF).
+Uma plataforma de inteligência econômica baseada em dados públicos do Pix do Banco Central do Brasil.
 
-## 🚀 Tecnologias Utilizadas
+Em vez de apenas exibir um mapa, o projeto transforma dados municipais do Pix em indicadores estaduais, rankings e visualizações que ajudam a entender a atividade econômica regional em tempo quase real.
 
-- **[Next.js 14+](https://nextjs.org/)**: Framework React com App Router.
-- **[React](https://react.dev/)**: Biblioteca de UI.
-- **[Tailwind CSS v4](https://tailwindcss.com/)**: Estilização utilitária com design responsivo.
-- **[Plotly.js / react-plotly.js](https://plotly.com/javascript/)**: Renderização do mapa coroplético e do gráfico de barras.
-- **TypeScript**: Tipagem estática para maior confiabilidade do código.
+## Visão do produto
 
-## 📊 Fonte dos Dados
+O objetivo é evoluir de um dashboard para uma plataforma de analytics voltada para fintechs, bancos, consultorias, varejo, crédito e gestores públicos.
 
-Os dados são obtidos da [API de Dados Abertos do Banco Central do Brasil (BCB)](https://dadosabertos.bcb.gov.br/dataset/pix). 
-Especificamente, o projeto consome o endpoint OData `TransacoesPixPorMunicipio`.
+## Tecnologias
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS v4
+- Plotly.js / react-plotly.js
+
+## Fonte dos dados
+
+Os dados são obtidos da API de Dados Abertos do Banco Central do Brasil (BCB), utilizando o endpoint OData `TransacoesPixPorMunicipio`.
 
 A API do painel (`app/api/pix-by-state/route.ts`):
-1. Consulta os dados dos últimos meses na API do BCB até encontrar dados válidos.
-2. Agrega os dados em nível municipal para nível estadual (UF).
-3. Soma as transações (pagador PF e PJ) e os valores movimentados.
-4. Caso a API do BCB esteja instável ou indisponível (fato comum em APIs públicas não autenticadas), o sistema retorna um dataset de contingência com base nas proporções conhecidas de uso do Pix no Brasil, garantindo que o dashboard sempre renderize.
+- consulta os dados mais recentes disponíveis;
+- agrega municípios em estados (UF);
+- soma quantidade de transações e valores movimentados;
+- utiliza um dataset de contingência quando a API do BCB estiver indisponível.
 
-## 🛠️ Como Executar Localmente
+## Funcionalidades atuais
 
-### Pré-requisitos
-- Node.js 18+ instalado.
-- Gerenciador de pacotes (npm, yarn, pnpm, etc).
+- mapa coroplético interativo por estado;
+- alternância entre quantidade de transações e valor movimentado;
+- ranking Top 5 por atividade Pix;
+- layout responsivo para desktop e mobile.
 
-### Passo a Passo
+## Roadmap
 
-1. **Clone ou faça o download** do repositório.
-2. **Instale as dependências** navegando até o diretório do projeto:
-   ```bash
-   npm install
-   ```
-3. **Inicie o servidor de desenvolvimento**:
-   ```bash
-   npm run dev
-   ```
-4. **Acesse o painel**: Abra o navegador e acesse [http://localhost:3000](http://localhost:3000).
+### Fase 1
+- séries temporais por estado;
+- comparação entre estados;
+- crescimento mensal e acumulado.
 
-## 🌟 Funcionalidades
+### Fase 2
+- visualização por município;
+- Pix per capita;
+- ranking nacional de municípios;
+- indicadores proprietários.
 
-- **Mapa Coroplético Interativo**: Permite explorar as estatísticas de cada estado com *tooltips* customizados.
-- **Alternância de Métricas**: Alterne a visualização entre "Quantidade de Transações" e "Valor Total Movimentado".
-- **Gráfico Top 5**: Um ranking em barra horizontal evidenciando os 5 estados com maior atividade no Pix.
-- **Design Premium**: Uso de *Glassmorphism*, cores com contraste ideal e layout completamente responsivo (funciona em Desktop, Tablet e Mobile).
+### Fase 3
+- API pública;
+- exportação de dados;
+- alertas automáticos de crescimento anormal;
+- integração com outros dados econômicos (IBGE, Caged, empresas abertas).
+
+## Como executar
+
+```bash
+npm install
+npm run dev
+```
+
+Abra `http://localhost:3000` no navegador.
+
+## Diferencial
+
+O projeto busca construir um índice de atividade econômica baseado no Pix, utilizando apenas dados públicos do Banco Central, permitindo identificar tendências regionais e oportunidades de mercado antes que apareçam em indicadores econômicos tradicionais.
