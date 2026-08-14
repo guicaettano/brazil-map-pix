@@ -125,7 +125,7 @@ export default function PixChoroplethMap() {
     });
 
     return {
-      labels: sortedByMetric.map((s) => s.uf),
+      labels: sortedByMetric.map((s) => s.nome_estado),
       values: sortedByMetric.map((s) =>
         metric === 'qtd_transacoes' ? s.qtd_transacoes : s.valor_total
       ),

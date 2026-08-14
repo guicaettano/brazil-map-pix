@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mapa de Transações Pix por Estado (Brasil)
 
-## Getting Started
+Um painel interativo (dashboard) desenvolvido em Next.js (App Router) que exibe um mapa coroplético do Brasil com o volume e o valor total de transações Pix por estado (UF).
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **[Next.js 14+](https://nextjs.org/)**: Framework React com App Router.
+- **[React](https://react.dev/)**: Biblioteca de UI.
+- **[Tailwind CSS v4](https://tailwindcss.com/)**: Estilização utilitária com design responsivo.
+- **[Plotly.js / react-plotly.js](https://plotly.com/javascript/)**: Renderização do mapa coroplético e do gráfico de barras.
+- **TypeScript**: Tipagem estática para maior confiabilidade do código.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📊 Fonte dos Dados
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Os dados são obtidos da [API de Dados Abertos do Banco Central do Brasil (BCB)](https://dadosabertos.bcb.gov.br/dataset/pix). 
+Especificamente, o projeto consome o endpoint OData `TransacoesPixPorMunicipio`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A API do painel (`app/api/pix-by-state/route.ts`):
+1. Consulta os dados dos últimos meses na API do BCB até encontrar dados válidos.
+2. Agrega os dados em nível municipal para nível estadual (UF).
+3. Soma as transações (pagador PF e PJ) e os valores movimentados.
+4. Caso a API do BCB esteja instável ou indisponível (fato comum em APIs públicas não autenticadas), o sistema retorna um dataset de contingência com base nas proporções conhecidas de uso do Pix no Brasil, garantindo que o dashboard sempre renderize.
 
-## Learn More
+## 🛠️ Como Executar Localmente
 
-To learn more about Next.js, take a look at the following resources:
+### Pré-requisitos
+- Node.js 18+ instalado.
+- Gerenciador de pacotes (npm, yarn, pnpm, etc).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Passo a Passo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone ou faça o download** do repositório.
+2. **Instale as dependências** navegando até o diretório do projeto:
+   ```bash
+   npm install
+   ```
+3. **Inicie o servidor de desenvolvimento**:
+   ```bash
+   npm run dev
+   ```
+4. **Acesse o painel**: Abra o navegador e acesse [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+## 🌟 Funcionalidades
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Mapa Coroplético Interativo**: Permite explorar as estatísticas de cada estado com *tooltips* customizados.
+- **Alternância de Métricas**: Alterne a visualização entre "Quantidade de Transações" e "Valor Total Movimentado".
+- **Gráfico Top 5**: Um ranking em barra horizontal evidenciando os 5 estados com maior atividade no Pix.
+- **Design Premium**: Uso de *Glassmorphism*, cores com contraste ideal e layout completamente responsivo (funciona em Desktop, Tablet e Mobile).
